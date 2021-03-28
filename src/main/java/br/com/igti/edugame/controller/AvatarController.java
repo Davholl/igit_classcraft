@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.igti.edugame.domain.Avatar;
+import br.com.igti.edugame.dto.AvatarVestidoDTO;
 import br.com.igti.edugame.service.AvatarService;
 import javassist.NotFoundException;
 
@@ -30,7 +31,7 @@ public class AvatarController {
 
 	@PreAuthorize("hasRole('ALUNO')")
 	@GetMapping("/avatar/detalhar/{avatarId}")
-	public Avatar detalharAvatar(@PathVariable("avatarId") Long avatarId) {
+	public AvatarVestidoDTO detalharAvatar(@PathVariable("avatarId") Long avatarId) {
 	    return avatarService.detalharAvatar(avatarId);
 	}
 	

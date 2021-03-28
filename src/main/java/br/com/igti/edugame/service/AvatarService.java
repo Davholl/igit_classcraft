@@ -12,6 +12,8 @@ import br.com.igti.edugame.domain.Avatar;
 import br.com.igti.edugame.domain.Equipamento;
 import br.com.igti.edugame.domain.Inventario;
 import br.com.igti.edugame.domain.InventarioId;
+import br.com.igti.edugame.dto.AvatarVestidoDTO;
+import br.com.igti.edugame.enums.SlotsEnum;
 import br.com.igti.edugame.repository.AvatarRepository;
 import br.com.igti.edugame.repository.EquipamentoRepository;
 import br.com.igti.edugame.repository.InventarioRepository;
@@ -73,9 +75,32 @@ public class AvatarService {
 
 	}
 	
-	public Avatar detalharAvatar(Long avatarId) {
+	public AvatarVestidoDTO detalharAvatar(Long avatarId) {
 		Avatar avatar = avatarRepository.findById(avatarId).get();
-		return avatar;
+		List<Inventario> itensEquipados = inventarioRepository.findAllEquippedById(avatarId);
+		AvatarVestidoDTO dto = new AvatarVestidoDTO(avatar);
+		
+		for (Inventario inventario : itensEquipados) {
+			Optional<Equipamento> equip = equipamentoRepository.findById(inventario.getInventarioId().getEquipamentoId());
+			
+			if (equip.isPresent()) {
+				
+				SlotsEnum slot = SlotsEnum.findByName(equip.get().slot);
+				switch(slot) {
+				  case Cabelo:
+				    dto.setCabelo(equip.get().id);
+				    break;
+				  case Corpo:
+					  dto.setCorpo(equip.get().id);
+				    break;
+				  case Sapato:
+					  dto.setSapato(equip.get().id);
+					  break;
+				}
+			}
+		}
+		
+		return dto;
 	}
 	
 	public List<Avatar> buscarAvataresPorTurma(Long idTurma){
