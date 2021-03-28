@@ -18,7 +18,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		// Allow pages to be loaded in frames from
 		// the same origin; needed for H2-Console
-		.headers().frameOptions().sameOrigin();
+		.headers().frameOptions().sameOrigin()
+		.and().cors();
 	}
 
     @Autowired

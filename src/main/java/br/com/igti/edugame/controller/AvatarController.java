@@ -1,7 +1,10 @@
 package br.com.igti.edugame.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +15,18 @@ import br.com.igti.edugame.domain.Avatar;
 import br.com.igti.edugame.service.AvatarService;
 import javassist.NotFoundException;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class AvatarController {
 	
 	@Autowired
 	private AvatarService avatarService;
+	
+	@PreAuthorize("hasRole('ALUNO')")
+	@GetMapping("/avatar/listar")
+	public List<Avatar> listarAvatares() {
+	    return avatarService.listarAvatares();
+	}
 
 	@PreAuthorize("hasRole('ALUNO')")
 	@GetMapping("/avatar/detalhar/{avatarId}")

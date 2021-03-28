@@ -89,4 +89,8 @@ public class AvatarService {
 		
 		avatarRepository.save(avatar);
 	}
+
+	public List<Avatar> listarAvatares() {
+		return this.avatarRepository.findAll();
+	}
 }
