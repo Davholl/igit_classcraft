@@ -1,5 +1,6 @@
 package br.com.igti.edugame.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
@@ -11,8 +12,13 @@ import javax.persistence.Id;
  *
  */
 @Entity
-public class Avatar {
+public class Avatar implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5422070466112218731L;
+
 	@Id
 	@GeneratedValue
 	public Long avatarId;

@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.igti.edugame.domain.Avatar;
-import br.com.igti.edugame.dto.AvatarVestidoDTO;
+import br.com.igti.edugame.dto.AvatarComInventarioDTO;
 import br.com.igti.edugame.service.AvatarService;
 import javassist.NotFoundException;
 
@@ -31,7 +32,7 @@ public class AvatarController {
 
 	@PreAuthorize("hasRole('ALUNO')")
 	@GetMapping("/avatar/detalhar/{avatarId}")
-	public AvatarVestidoDTO detalharAvatar(@PathVariable("avatarId") Long avatarId) {
+	public AvatarComInventarioDTO detalharAvatar(@PathVariable("avatarId") Long avatarId) {
 	    return avatarService.detalharAvatar(avatarId);
 	}
 	
@@ -46,5 +47,12 @@ public class AvatarController {
 	public void equiparItem(@RequestParam("avatarId") Long avatarId,@RequestParam("equipamentoId") Long equipamentoId) throws NotFoundException {
 	    avatarService.equiparItem(avatarId, equipamentoId);
 	}
+	
+	@PostMapping("/avatar/salvar")
+	public AvatarComInventarioDTO salvarAvatar(@RequestBody AvatarComInventarioDTO avatarComInventario) throws NotFoundException {
+	    return avatarService.salvarAvatar(avatarComInventario);
+	}
+	
+	
 	
 }
