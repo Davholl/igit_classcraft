@@ -33,7 +33,7 @@ public class AvatarService {
 	@Autowired
 	InventarioRepository inventarioRepository;
 	
-	public void comprarItem(Long avatarId, Long equipamentoId) {
+	public void comprarItem(Long avatarId, Long equipamentoId) throws NotFoundException {
 		Avatar avatar = avatarRepository.findById(avatarId).get();
 		Equipamento equipamento= equipamentoRepository.findById(equipamentoId).get();
 		
@@ -55,6 +55,7 @@ public class AvatarService {
 				inventarioRepository.save(novoInventario);
 			}
 			avatarRepository.save(avatar);
+			equiparItem(avatarId, equipamentoId);
 		}else {
 			throw new RuntimeException("Infelizmente você não possui ouro o bastante para este item");
 		}
